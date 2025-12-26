@@ -36,7 +36,7 @@ const Hero = () => {
     //Video animation timeline
     gsap.timeline({
         scrollTrigger:{
-            trgger: '#hero',
+            trigger: '#hero',
             start: 'top top',
             end: 'bottom top',
             scrub: true,
@@ -56,11 +56,31 @@ const Hero = () => {
 		end: endValue,
 		scrub: true,
 		pin: true,
+		onEnter: () => {
+			if (videoRef.current) {
+				videoRef.current.play();
+			}
+		},
+		onLeave: () => {
+			if (videoRef.current) {
+				videoRef.current.pause();
+			}
+		},
+		onEnterBack: () => {
+			if (videoRef.current) {
+				videoRef.current.play();
+			}
+		},
+		onLeaveBack: () => {
+			if (videoRef.current) {
+				videoRef.current.pause();
+			}
+		}
 	 },
 	});
 	
 	videoRef.current.onloadedmetadata = () => {
-	tl.videoTimelineRef.current.to(videoRef.current, {
+	 tl.to(videoRef.current, {
 		currentTime: videoRef.current.duration,
 	 });
 	};
@@ -68,7 +88,7 @@ const Hero = () => {
    },[])
   return (
     <>
-      <section id ="hero" className='noise'>
+      <section id ="hero" className='noisy'>
         <h1 className='title'>MOJITO</h1>
         <img
           src="/images/hero-left-leaf.png"
@@ -106,7 +126,7 @@ const Hero = () => {
         ref={videoRef}
          src="/videos/output.mp4"
          muted
-         playsInline          
+         playsInline
          preload='auto'
         />
         <div className='noisy'></div>
